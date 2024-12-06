@@ -1,11 +1,13 @@
 package DungeonQuest;
 
+// Imports
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-// Class to define the Character
+
+// Class to define the Character / with constructor
 class Character {
     private String name;
     private String characterClass;
@@ -106,10 +108,15 @@ class CharacterCreator {
 
 // Main Game with Menu
 public class Core {
-    private static Character playerCharacter;
+    private static final int GRID_SIZE = 5; // Map size
+    private static int playerX = 2; // Start pos X
+    private static int playerY = 2; // Start pos Y
+
+    private static Character playerCharacter; // Instance of the Player's Character
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        boolean isExploring = true;
 
         loadCharacter();
 
@@ -128,6 +135,7 @@ public class Core {
                 case 1:
                     playerCharacter = CharacterCreator.createCharacter();
                     System.out.println("\nCharacter created successfully!");
+
                     break;
                 case 2:
                     if (playerCharacter == null) {
@@ -154,6 +162,7 @@ public class Core {
         }
     }
 
+    // Save Character Function
     private static void saveCharacter() {
         try (PrintWriter writer = new PrintWriter(new FileWriter("character.txt"))) {
             writer.println(playerCharacter.getName());
@@ -166,6 +175,7 @@ public class Core {
         }
     }
 
+    // Load Character Function
     private static void loadCharacter() {
         try (BufferedReader reader = new BufferedReader(new FileReader("character.txt"))) {
             String name = reader.readLine();
